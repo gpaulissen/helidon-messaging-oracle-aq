@@ -12,7 +12,6 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import oracle.jms.AQjmsQueueConnectionFactory;
-import oracle.jms.AQjmsXAQueueConnectionFactory;
 
 public class AQConsumer {
     public static void main(String args[]) throws SQLException, JMSException {

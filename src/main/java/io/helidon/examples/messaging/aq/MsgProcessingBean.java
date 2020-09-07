@@ -18,21 +18,20 @@
 package io.helidon.examples.messaging.aq;
 
 import java.sql.SQLException;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.SubmissionPublisher;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
-import javax.jms.Session;
 import javax.ws.rs.sse.SseEventSink;
 
-import oracle.jms.AQjmsQueueConnectionFactory;
+import io.helidon.common.reactive.Multi;
+import io.helidon.config.Config;
+import io.helidon.messaging.connectors.aq.AqMessage;
+import io.helidon.messaging.connectors.jms.JmsMessage;
+
 import oracle.jms.AQjmsSession;
-import oracle.jms.AQjmsTextMessage;
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Message;
@@ -41,10 +40,6 @@ import org.eclipse.microprofile.reactive.streams.operators.ProcessorBuilder;
 import org.eclipse.microprofile.reactive.streams.operators.ReactiveStreams;
 import org.reactivestreams.FlowAdapters;
 import org.reactivestreams.Publisher;
-
-import io.helidon.common.reactive.Multi;
-import io.helidon.config.Config;
-import io.helidon.messaging.connectors.jms.JmsMessage;
 
 /**
  * Bean for message processing.
@@ -60,16 +55,6 @@ public class MsgProcessingBean {
         this.config = config;
     }
 
-    @Produces
-    @ApplicationScoped
-    public ConnectionFactory connectionFactory() throws JMSException {
-        AQjmsQueueConnectionFactory fact = new AQjmsQueueConnectionFactory();
-        fact.setJdbcURL(config.get("jdbc.url").asString().get());
-        fact.setUsername(config.get("jdbc.user").asString().get());
-        fact.setPassword(config.get("jdbc.pass").asString().get());
-        return fact;
-    }
-
     /**
      * Create a publisher for the emitter.
      *
@@ -79,11 +64,13 @@ public class MsgProcessingBean {
     public Publisher<String> preparePublisher() {
         // Create new publisher for emitting to by this::process
         return ReactiveStreams
-                .fromPublisher(FlowAdapters.toPublisher(Multi.create(emitter)
-                        .onCancel(() ->
-                                System.out.println("---")
+                .fromPublisher(
+                        FlowAdapters.toPublisher(
+                                Multi.create(emitter)
+                                        // Log all signals
+                                        .log()
                         )
-                        .log()))
+                )
                 .buildRs();
     }
 
@@ -103,14 +90,13 @@ public class MsgProcessingBean {
 
     @Incoming("fromJms")
     @Acknowledgment(Acknowledgment.Strategy.MANUAL)
-    public CompletionStage<?> fromJms(JmsMessage<String> msg) throws JMSException, SQLException {
+    public CompletionStage<?> fromJms(AqMessage<String> msg) throws SQLException {
         System.out.println("Received: " + msg.getPayload());
-        AQjmsSession session = (AQjmsSession) msg.getSessionMetadata().getSession();
         // direct commit
-        // session.getDBConnection().commit();
+        //msg.getDBConnection().commit();
         this.broadcaster.submit(msg.getPayload());
         // ack commits only in non-transacted mode
-        return CompletableFuture.completedFuture(null);//msg.ack();
+        return msg.ack();
     }
 
     /**

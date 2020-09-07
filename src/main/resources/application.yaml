@@ -17,23 +17,22 @@ server.port: 7001
 server.static.classpath.location: /WEB
 server.static.classpath.welcome: index.html
 
-jdbc.url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=192.168.0.123)(Port=1521))(CONNECT_DATA=(SID=KECSID)))
-jdbc.user: sys as SYSDBA
-jdbc.pass: kec
-
 mp:
   messaging:
     connector:
-      helidon-jms:
+      helidon-aq:
         # When transacted is false Message.ack() commits
         # when true Message.ack() is noop
         transacted: false
         acknowledge-mode: CLIENT_ACKNOWLEDGE
+        url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=192.168.0.123)(Port=1521))(CONNECT_DATA=(SID=KECSID)))
+        user: sys as SYSDBA
+        password: kec
     outgoing.toJms:
-      connector: helidon-jms
+      connector: helidon-aq
       destination: KECQUEUE
       type: queue
     incoming.fromJms:
-      connector: helidon-jms
+      connector: helidon-aq
       destination: KECQUEUE
       type: queue

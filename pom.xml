@@ -23,8 +23,8 @@
             <artifactId>helidon-microprofile-messaging</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.helidon.messaging.jms</groupId>
-            <artifactId>helidon-messaging-jms</artifactId>
+            <groupId>io.helidon.messaging.aq</groupId>
+            <artifactId>helidon-messaging-aq</artifactId>
         </dependency>
         <dependency>
             <groupId>io.helidon.microprofile.bundles</groupId>
@@ -60,32 +60,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
-        </dependency>
-        <!-- Required so we can do nice JMS things -->
-        <dependency>
-            <groupId>javax.jms</groupId>
-            <artifactId>jms-api</artifactId>
-            <version>1.1-rev-1</version>
-        </dependency>
-
-        <!-- JTA requred for transactions -->
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.1</version>
-        </dependency>
-
-        <!-- Oracle AQ dependencies -->
-        <!-- To get these, download Oracle Database and extract aqapi.jar and ojdbc8.jar -->
-        <dependency>
-            <groupId>com.oracle.database.messaging</groupId>
-            <artifactId>aqapi</artifactId>
-            <version>19.3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle.ojdbc</groupId>
-            <artifactId>ojdbc10</artifactId>
-            <version>19.3.0.0</version>
         </dependency>
     </dependencies>
 
