@@ -23,15 +23,12 @@ import java.util.concurrent.SubmissionPublisher;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.jms.JMSException;
 import javax.ws.rs.sse.SseEventSink;
 
 import io.helidon.common.reactive.Multi;
 import io.helidon.config.Config;
 import io.helidon.messaging.connectors.aq.AqMessage;
-import io.helidon.messaging.connectors.jms.JmsMessage;
 
-import oracle.jms.AQjmsSession;
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Message;
