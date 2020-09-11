@@ -3,6 +3,9 @@ package io.helidon.examples.messaging.aq;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
@@ -20,7 +23,7 @@ public class AQConsumer {
         String sid = "KECSID";
         String username = "sys as SYSDBA";
         String password = "kec";
-        String queue = "KECQUEUE";
+        String queue = "KEC_OUT_QUEUE";
 
         String url = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)" +
                 "(Host=" + hostname + ")" +
@@ -44,10 +47,18 @@ public class AQConsumer {
         Queue q = session.createQueue(queue);
         MessageConsumer consumer = session.createConsumer(q);
 
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            try {
+                TextMessage received = (TextMessage) consumer.receiveNoWait();
+                if(received == null){
+                    return;
+                }
+                System.out.println("Received a message! " + received.getText());
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
+        }, 0, 100, TimeUnit.MILLISECONDS);
         conn.start();
-
-        TextMessage received = (TextMessage) consumer.receive(5000L);
-        System.out.println("Received a message! " + received.getText());
 
 
     }

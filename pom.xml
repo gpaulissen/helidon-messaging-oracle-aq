@@ -31,19 +31,12 @@
             <artifactId>helidon-microprofile</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-sse</artifactId>
-            <version>${version.lib.jersey}</version>
+            <groupId>io.helidon.dbclient</groupId>
+            <artifactId>helidon-dbclient</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-common</artifactId>
-            <version>${version.lib.jersey}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>${version.lib.jersey}</version>
+            <groupId>io.helidon.dbclient</groupId>
+            <artifactId>helidon-dbclient-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jboss</groupId>

@@ -28,11 +28,14 @@ mp:
         url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=192.168.0.123)(Port=1521))(CONNECT_DATA=(SID=KECSID)))
         username: sys as SYSDBA
         password: kec
-    outgoing.toJms:
+        period-executions: 500
+    outgoing.toAqtx:
       connector: helidon-aq
-      destination: KECQUEUE
+      destination: KEC_OUT_QUEUE
+      session-group-id: kec-logged-queue-tx
       type: queue
-    incoming.fromJms:
+    incoming.fromAqtx:
       connector: helidon-aq
-      destination: KECQUEUE
+      destination: KEC_IN_QUEUE
+      session-group-id: kec-logged-queue-tx
       type: queue

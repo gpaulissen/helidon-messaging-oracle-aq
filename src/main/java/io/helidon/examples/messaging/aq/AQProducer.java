@@ -20,7 +20,7 @@ public class AQProducer {
         String sid = "KECSID";
         String username = "sys as SYSDBA";
         String password = "kec";
-        String queue = "KECQUEUE";
+        String queue = "KEC_IN_QUEUE";
 
         String url = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)" +
                 "(Host=" + hostname + ")" +
