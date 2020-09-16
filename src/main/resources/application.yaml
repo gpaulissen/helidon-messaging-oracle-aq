@@ -17,6 +17,15 @@ server.port: 7001
 server.static.classpath.location: /WEB
 server.static.classpath.welcome: index.html
 
+javax:
+  sql:
+    DataSource:
+      aq-test-ds:
+        connectionFactoryClassName: oracle.jdbc.pool.OracleDataSource
+        URL: jdbc:oracle:thin:@exampledb_high?TNS_ADMIN=/home/kec/Downloads/Wallet_EXAMPLEDB
+        user: kec
+        password: SuperSecretPassword1234
+
 mp:
   messaging:
     connector:
@@ -25,9 +34,7 @@ mp:
         # when true Message.ack() is noop
         transacted: false
         acknowledge-mode: CLIENT_ACKNOWLEDGE
-        url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=192.168.0.123)(Port=1521))(CONNECT_DATA=(SID=KECSID)))
-        username: sys as SYSDBA
-        password: kec
+        data-source: aq-test-ds
     outgoing.toJms:
       connector: helidon-aq
       destination: KECQUEUE

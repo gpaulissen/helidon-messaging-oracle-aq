@@ -31,6 +31,11 @@
             <artifactId>helidon-microprofile</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.helidon.integrations.cdi</groupId>
+            <artifactId>helidon-integrations-cdi-datasource-ucp</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-sse</artifactId>
             <version>${version.lib.jersey}</version>
