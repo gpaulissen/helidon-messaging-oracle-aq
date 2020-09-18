@@ -18,10 +18,7 @@
 package io.helidon.examples.messaging.aq;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.jms.JMSException;
 
-import io.helidon.dbclient.DbClient;
-import io.helidon.dbclient.jdbc.JdbcDbClientProviderBuilder;
 import io.helidon.messaging.connectors.aq.AqMessage;
 
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;

@@ -27,16 +27,13 @@
             <artifactId>helidon-messaging-aq</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.helidon.integrations.cdi</groupId>
+            <artifactId>helidon-integrations-cdi-datasource-ucp</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>io.helidon.microprofile.bundles</groupId>
             <artifactId>helidon-microprofile</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.helidon.dbclient</groupId>
-            <artifactId>helidon-dbclient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.helidon.dbclient</groupId>
-            <artifactId>helidon-dbclient-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jboss</groupId>
