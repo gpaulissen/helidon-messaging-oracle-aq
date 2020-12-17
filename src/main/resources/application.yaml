@@ -20,7 +20,13 @@ server.static.classpath.welcome: index.html
 javax:
   sql:
     DataSource:
-      aq-test-ds:
+      local-example-ds:
+        connectionFactoryClassName: oracle.jdbc.pool.OracleDataSource
+        URL: jdbc:oracle:thin:@192.168.0.123:1521:XE
+        user: frank
+        password: frank
+
+      oci-example-ds:
         connectionFactoryClassName: oracle.jdbc.pool.OracleDataSource
         URL: jdbc:oracle:thin:@exampledb_high?TNS_ADMIN=/home/kec/Downloads/Wallet_EXAMPLEDB
         user: kec
@@ -30,16 +36,16 @@ mp:
   messaging:
     connector:
       helidon-aq:
+        data-source: local-example-ds
         # When transacted is false Message.ack() commits
-        # when true Message.ack() is noop
+        # when true Message.ack() is no-op
         transacted: false
         acknowledge-mode: CLIENT_ACKNOWLEDGE
-        data-source: aq-test-ds
-    outgoing.toJms:
+    outgoing.to-aq:
       connector: helidon-aq
-      destination: KECQUEUE
+      destination: example_queue_1
       type: queue
-    incoming.fromJms:
+    incoming.from-aq:
       connector: helidon-aq
-      destination: KECQUEUE
+      destination: example_queue_1
       type: queue

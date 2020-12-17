@@ -18,29 +18,13 @@ package io.helidon.examples.messaging.aq;
 
 import io.helidon.microprofile.server.Server;
 
-/**
- * Explicit example.
- */
 public class Main {
-    private Main() {
-    }
-
     /**
      * Starts server and initializes CDI container manually.
      *
      * @param args command line arguments (ignored)
      */
     public static void main(String[] args) {
-        Server server = Server.builder()
-                .addResourceClass(MessageResource.class)
-                .host("localhost")
-                .build();
-
-        server.start();
-
-        String endpoint = "http://" + server.host() + ":" + server.port();
-        System.out.println("Try me                     " + endpoint);
-        System.out.println("SSE resource               " + endpoint + "/example/sse");
-        System.out.println("Send messages              " + endpoint + "/example/send/HelloWorld");
+        Server.create().start();
     }
 }
