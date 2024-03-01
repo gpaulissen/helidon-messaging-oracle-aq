@@ -6,11 +6,20 @@
     <parent>
         <groupId>io.helidon.applications</groupId>
         <artifactId>helidon-mp</artifactId>
-        <version>2.1.1-SNAPSHOT</version>
+        <version>4.0.5</version>
     </parent>
     <groupId>io.helidon.examples.messaging</groupId>
     <artifactId>helidon-messaging-oracle-aq</artifactId>
     <name>Helidon messaging with Oracle AQ</name>
+
+    <properties>
+      <maven.compiler.source>21</maven.compiler.source>
+      <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+      <!-- https://winterbe.com/posts/2018/08/29/migrate-maven-projects-to-java-11-jigsaw/ -->
+      <!-- Property to set the release flag of the Java compiler (JDK 9 and above) -->
+      <maven.compiler.release>${maven.compiler.source}</maven.compiler.release>
+      <maven.compiler.force.javac>false</maven.compiler.force.javac>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -30,11 +39,25 @@
             <artifactId>helidon-microprofile</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jboss</groupId>
+            <groupId>io.smallrye</groupId>
             <artifactId>jandex</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+            <version>3.1.6</version>
         </dependency>
+        <dependency>
+          <groupId>javax</groupId>
+          <artifactId>javaee-api</artifactId>
+          <version>8.0.1</version>
+          <scope>provided</scope>
+        </dependency>
+        <!--dependency>
+            <groupId>io.smallrye.jandex</groupId>
+            <artifactId>jandex-maven-plugin</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+            <version>3.1.6</version>
+        </dependency-->
     </dependencies>
 
     <build>
@@ -51,6 +74,7 @@
             <plugin>
                 <groupId>org.jboss.jandex</groupId>
                 <artifactId>jandex-maven-plugin</artifactId>
+                <version>1.2.3</version>
                 <executions>
                     <execution>
                         <id>make-index</id>
